@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: go-fibo
-        image: damianjaniszewski/go-fibo:0.02
+        image: damianjaniszewski/go-fibo:0.04
         env:
         - name: PORT
           value: "80"
