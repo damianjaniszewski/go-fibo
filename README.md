@@ -23,7 +23,7 @@ $ docker build -t <repo>/<name>:<version> .
 $ docker push <repo>/<name>:<version>
 ```
 
-  4. Deploy to K8s (verify <repo>/<name>:<version> for your image)
+  4. Deploy to K8s (verify which image you use)
 
 ```
 $ kubectl apply -f go-fibo.yml
