@@ -29,7 +29,7 @@ spec:
           # Probe for http
           httpGet:
             # Path to probe
-            path: /health
+            path: /svc/health
             # Port to probe
             port: 80
         livenessProbe:
@@ -41,7 +41,7 @@ spec:
           # Probe for http
           httpGet:
             # Path to probe
-            path: /health
+            path: /svc/health
             # Port to probe
             port: 80
 

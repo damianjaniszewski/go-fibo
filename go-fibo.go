@@ -15,6 +15,11 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+
+	w.WriteHeader(http.StatusOK)
+
+	if r.Method == "POST" {
+	}
 }
 
 func crashHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +29,7 @@ func crashHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "POST" {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Fatal("/crash request received, crashing...")
+		log.Fatal("/svc/crash request received, crashing...")
 	}
 }
 
@@ -32,6 +37,8 @@ func restHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+
+	w.WriteHeader(http.StatusOK)
 
 	vars := mux.Vars(r)
 
@@ -55,9 +62,9 @@ func restHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
 
-	router.HandleFunc("/{sequence:[0-9]+}", restHandler).Methods("POST", "OPTIONS")
-	router.HandleFunc("/health", healthHandler).Methods("GET", "OPTIONS")
-	router.HandleFunc("/crash", crashHandler).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/fibo/{sequence:[0-9]+}", restHandler).Methods("POST", "OPTIONS")
+	router.HandleFunc("/svc/health", healthHandler).Methods("GET", "OPTIONS")
+	router.HandleFunc("/svc/crash", crashHandler).Methods("POST", "OPTIONS")
 
 	port := ":" + os.Getenv("PORT")
 	log.Println("go-fibo started, listening on", port)
