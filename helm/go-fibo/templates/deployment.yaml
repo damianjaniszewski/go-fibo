@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "go-fibo.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.app }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Values.version }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "go-fibo.chart" . }}
+    app: {{ .Values.app }}
+    version: {{ .Values.version }}
+    env: {{ .Values.environment }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app }}
+      version: {{ .Values.version }}
+      env: {{ .Values.environment }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.app }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Values.version }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        helm.sh/chart: {{ include "go-fibo.chart" . }}
+        app: {{ .Values.app }}
+        version: {{ .Values.version }}
+        env: {{ .Values.environment }}
+      annotations:
+        # prometheus.io/scrape: "true"
+        # prometheus.io/port: "80"
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          restartPolicy: {{ .Values.restartPolicy }}
+          env:
+          - name: VERSION
+            value: "{{ .Values.version }}"
+          - name: MIN
+            value: "{{ .Values.min }}"
+          - name: MAX
+            value: "{{ .Values.max }}"
+          - name: PORT
+            value: "80"
+          - name: LOGLEVEL
+            value: "{{ .Values.logLevel }}"
+          - name: DEBUGLEVEL
+            value: "{{ .Values.debugLevel }}"
+          - name: LOGAS
+            value: "{{ .Values.logAs }}"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

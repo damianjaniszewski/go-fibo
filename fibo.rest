@@ -1,0 +1,57 @@
+GET http://localhost:8080/api/v1/fibo
+
+###
+GET http://localhost:8080/api/v1/sequence/46
+
+###
+GET http://localhost:8080/metrics
+
+###
+GET http://localhost:8080/healthz
+
+###
+GET http://localhost:8080/readyz
+
+###
+POST http://localhost:8080/support/v1/quit
+
+###
+POST http://localhost:8080/support/v1/fail
+
+###
+POST http://localhost:8080/support/v1/quiesce
+
+###
+POST http://localhost:8080/support/v1/resume
+
+###
+POST http://localhost:8080/support/v1/crash
+
+###
+GET http://localhost:8080/support/v1/env
+
+###
+GET http://localhost:8080/support/v1/version
+
+###
+GET http://localhost:8080/support/v1/loglevel
+
+###
+PUT http://localhost:8080/support/v1/loglevel
+Content-Type: application/json
+
+{
+  "log": "TRACE",
+  "debug": 4,
+  "format": "text"
+}
+
+###
+PUT http://localhost:8080/support/v1/loglevel
+Content-Type: application/json
+
+{
+  "log": "DEBUG",
+  "debug": 0,
+  "format": "text"
+}

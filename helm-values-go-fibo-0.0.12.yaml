@@ -1,0 +1,21 @@
+# Default values for go-env.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+app: go-fibo
+version: 0.0.12
+environment: stage
+
+logLevel: DEBUG
+logAs: text
+
+image:
+  repository: damianjaniszewski/go-fibo
+  tag: 0.0.12
+  pullPolicy: Always
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
