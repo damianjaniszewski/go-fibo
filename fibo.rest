@@ -7,6 +7,9 @@ GET http://localhost:8080/api/v1/sequence/46
 GET http://localhost:8080/metrics
 
 ###
+GET http://localhost:8080/metrics/opencensus/rpcz
+
+###
 GET http://localhost:8080/healthz
 
 ###

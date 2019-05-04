@@ -9,6 +9,7 @@ import (
 
 	"github.com/damianjaniszewski/zpages"
 	// "zpages"
+	// opencensus "go.opencensus.io/zpages"
 
 	"github.com/codingconcepts/env"
 	"github.com/joho/godotenv"
@@ -170,7 +171,7 @@ func middlewareLogging(next http.Handler) http.Handler {
 // initialization
 func init() {
 	if err := godotenv.Load(); err != nil {
-		logger.Fatal("error loading .env file")
+		logger.WithFields(logrus.Fields{"app": appName, "version": appVersion}).Warn(".env file not found")
 	}
 
 	if err := env.Set(&cfg); err != nil {
