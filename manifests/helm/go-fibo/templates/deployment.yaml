@@ -29,9 +29,10 @@ spec:
         app: {{ .Values.app }}
         version: {{ .Values.version }}
         env: {{ .Values.environment }}
+      {{- with .Values.annotations }}
       annotations:
-        # prometheus.io/scrape: "true"
-        # prometheus.io/port: "80"
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -67,6 +68,10 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.image.pullSecrets | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

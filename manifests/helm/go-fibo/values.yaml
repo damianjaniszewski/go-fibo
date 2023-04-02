@@ -2,13 +2,15 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
-restartPolicy: Always
 app: go-fibo
 version: 0.0.16
 environment: stage
+
 min: 16
 max: 42
+
+replicaCount: 1
+restartPolicy: Always
 
 logLevel: INFO
 debugLevel: 0
@@ -17,6 +19,8 @@ logAs: json
 image:
   repository: damianjaniszewski/go-fibo
   tag: 0.0.16
+  pullSecrets: []
+    # - name: myregistrykey
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -26,6 +30,9 @@ service:
   enabled: false
   type: ClusterIP
   port: 80
+  annotations: {}
+    # cloud.google.com/load-balancer-type: "Internal"
+servicenameOverride: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

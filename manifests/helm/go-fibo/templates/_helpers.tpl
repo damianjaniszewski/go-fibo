@@ -30,3 +30,7 @@ Create chart name and version as used by the chart label.
 {{- define "go-fibo.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- define "go-fibo.servicename" -}}
+{{- default .Release.Name .Values.servicenameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}

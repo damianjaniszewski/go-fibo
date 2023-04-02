@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.app }}
+  name: {{ include "go-fibo.servicename" . }}
   labels:
     app.kubernetes.io/name: {{ .Values.app }}
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -11,6 +11,10 @@ metadata:
     helm.sh/chart: {{ include "go-fibo.chart" . }}
     app: {{ .Values.app }}
     env: {{ .Values.environment }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
