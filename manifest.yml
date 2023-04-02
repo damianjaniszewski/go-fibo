@@ -1,4 +1,0 @@
-applications:
-- name: go-fibo
-  memory: 32M
-  instances: 4
