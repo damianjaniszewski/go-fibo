@@ -5,7 +5,7 @@
 replicaCount: 1
 restartPolicy: Always
 app: go-fibo
-version: 0.0.14
+version: 0.0.16
 environment: stage
 min: 16
 max: 42
@@ -16,7 +16,7 @@ logAs: json
 
 image:
   repository: damianjaniszewski/go-fibo
-  tag: 0.0.14
+  tag: 0.0.16
   pullPolicy: IfNotPresent
 
 nameOverride: ""
